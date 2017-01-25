@@ -1,34 +1,38 @@
 #ifndef TECHNICIAN_CLASS_H
 #define TECHNICIAN_CLASS_H
 
+#include <QObject>
 #include "global.h"
 
 class TECHNICIAN_CLASS
 {
+
     private:
 
-        uint32_t id;
-        string name;
-        uint32_t competence;
-        uint32_t shiftCount;
+        quint64 id;
+        QString name;
+        quint64 competence;
+        quint64 shiftCount;
     public:
 
-        uint32_t getID(void);
-        string getName(void);
-        uint32_t getCompetence(void);
-        uint32_t getShiftCount(void);
-        void setID(uint32_t id);
-        void setName(string name);
-        void setCompetence(uint32_t competence);
-        void setShiftCount(uint32_t count);
+        quint64 getID(void);
+        QString getName(void);
+        quint64 getCompetence(void);
+        quint64 getShiftCount(void);
+        void setID(quint64 id);
+        void setName(QString name);
+        void setCompetence(quint64 competence);
+        void setShiftCount(quint64 count);
         void addShiftCount(void);
         void subShiftCount(void);
 
         TECHNICIAN_CLASS(void);
-        TECHNICIAN_CLASS(uint32_t id);
-        TECHNICIAN_CLASS(uint32_t id, string name);
-        TECHNICIAN_CLASS(uint32_t id, string name, uint32_t competence);
+        TECHNICIAN_CLASS(quint64 id);
+        TECHNICIAN_CLASS(quint64 id, QString name);
+        TECHNICIAN_CLASS(quint64 id, QString name, quint64 competence);
         ~TECHNICIAN_CLASS();
+
+        bool operator==(TECHNICIAN_CLASS b);
 
 };
 
