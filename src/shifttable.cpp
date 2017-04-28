@@ -1,10 +1,8 @@
 #include "shifttable.h"
 
-ShiftTable::ShiftTable()
+ShiftTable::ShiftTable(QString excelSheet)
 {
-    m_excelSheet = new QXlsx::Document("Dienstplan.xlsx");
-
-    //initTechnicians();
+    m_excelSheet = new QXlsx::Document(excelSheet);
 }
 
 

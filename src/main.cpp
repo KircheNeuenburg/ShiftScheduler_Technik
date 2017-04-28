@@ -23,22 +23,24 @@
 
 int main(int argc, char *argv[])
 {
-
-    if(argc == 0)
+    auto excelSheet = "";
+    if(argc == 1)
     {
         std::cout << "Error: No excelsheet was selected" << std::endl;
         return -1;
     }
-    if(argc > 1)
+    else if(argc == 2)
+    {
+        excelSheet = argv[1];
+    }
+    else if(argc > 2)
     {
         std::cout << "Error: to many arguments" << std::endl;
         return -1;
     }
 
 
-
-
-    PLAN_CLASS plan;
+    PLAN_CLASS plan(excelSheet);
 
 
 
@@ -47,7 +49,6 @@ int main(int argc, char *argv[])
     if (plan.solvePlan())
     {
         std::cout << "Erfolg Backtrack Solver" << std::endl;
-
 
         if (plan.evolution())
         {

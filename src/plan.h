@@ -59,7 +59,7 @@ class PLAN_CLASS
         void outputToFile(void);
         void readPreviousShifts(void);
 
-        PLAN_CLASS(void);
+        PLAN_CLASS(QString excelSheet);
         ~PLAN_CLASS(void);
 
 };

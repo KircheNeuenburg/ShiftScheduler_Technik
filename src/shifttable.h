@@ -22,7 +22,7 @@ signals:
     void signal_addedShift(QString name);
 
 public:
-    ShiftTable();
+    ShiftTable(QString excelSheet);
 };
 
 #endif // SHIFTTABLE_H

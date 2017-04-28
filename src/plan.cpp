@@ -1,9 +1,12 @@
 #include "plan.h"
 
-PLAN_CLASS::PLAN_CLASS(void)
+PLAN_CLASS::PLAN_CLASS(QString excelSheet)
         : backtrackingDepth(0), backtrackingDepthMax(0), day_evo(
-                0), shift_evo(0)
+                0), shift_evo(0), m_excel(excelSheet)
 {
+    this->nullTechnician.setID(0);
+    this->nullTechnician.setName((QString)"");
+    this->nullTechnician.setCompetence(0);
 
     createShiftList(m_excel.getShifts());
     this->numberOfDays = m_excel.initDays();
@@ -13,9 +16,7 @@ PLAN_CLASS::PLAN_CLASS(void)
     createShiftTable();
 
 
-    this->nullTechnician.setID(0);
-    this->nullTechnician.setName((QString)"");
-    this->nullTechnician.setCompetence(0);
+
 }
 
 PLAN_CLASS::~PLAN_CLASS(void)
@@ -41,6 +42,42 @@ void PLAN_CLASS::createShiftTable(void)
     {
         this->shiftTable.append(tmp_List);
     }
+
+//    for(auto technician = 0; technician < this->technicianList.size(); technician++)
+//    {
+//        for(auto row = 0; row < this->numberOfDays; row++)
+//        {
+//            for(auto col = 0; col < this->shiftList.size();col++)
+//            {
+//                if(this->m_excel.readTable(row,col) == this->technicianList[technician].getName())
+//                {
+//                    this->shiftTable[row][col] = this->technicianList[technician];
+//                    this->technicianList[technician].addShiftCount();
+//                }
+//            }
+//        }
+//    }
+//    for(auto i = 0;i<this->numberOfDays;i++)
+//    {
+//        for(auto j = 0; j < this->shiftList.size();j++)
+//        {
+//            auto technicianIndex = 0; // index needed outside for-loop
+//            auto stop = false;
+//            for(technicianIndex = 0; technicianIndex < this->technicianList.size() && stop == false;technicianIndex++)
+//            {
+//                if(this->m_excel.readTable(i,j) == this->technicianList[technicianIndex].getName())
+//                {
+//                    stop = true;
+//                }
+
+//            }
+//            if(stop == true)
+//            {
+//                this->shiftTable[i][j] = this->technicianList[technicianIndex - 1];
+//                this->technicianList[technicianIndex - 1].addShiftCount();
+//            }
+//        }
+//    }
 }
 
 void PLAN_CLASS::deleteShiftTable(void)
@@ -59,7 +96,6 @@ void PLAN_CLASS::createTechnicianList(void)
 
 void PLAN_CLASS::deleteTechnicianList(void)
 {
-    //delete[] this->technicianList;
 }
 
 void PLAN_CLASS::createShiftList(quint64 numberOfShifts)
@@ -73,11 +109,16 @@ void PLAN_CLASS::createShiftList(quint64 numberOfShifts)
 
 void PLAN_CLASS::deleteShiftList(void)
 {
-    //delete[] this->shiftList;
 }
 
 bool PLAN_CLASS::solvePlan(void)
 {
+
+    if(this->startDay >= this->numberOfDays)
+    {
+        return false;
+    }
+
     quint64 day = 0;
     quint64 shift = 0;
 
@@ -346,7 +387,7 @@ void PLAN_CLASS::searchRandom(quint64 &shift, quint64 &day,
 
     do
     {
-        rand_index = rand() % technician.getShiftCount();
+        rand_index = rand() % (technician.getShiftCount());
     }
     while (rand_index < start_cnt);
 
@@ -405,7 +446,7 @@ void PLAN_CLASS::outputToFile(void)
 
 void PLAN_CLASS::readPreviousShifts(void)
 {
-    for (auto row = 0; row < this->numberOfDays - this->startDay; row++)
+    for (auto row = 0; row < /*this->numberOfDays -*/ this->startDay; row++)
     {
         for (auto col = 0; col < this->shiftList.size(); col++)
         {
